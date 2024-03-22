@@ -1,81 +1,46 @@
-# Turborepo starter
+# Minimal Reproduction of Error in Package with Drizzle Push
 
-This is an official starter Turborepo.
+This repository contains a sample project that demonstrates how to reproduce an error when using `drizzle-kit push:[database]`
 
-## Using this example
+It is a minimal turborepo using their basic generator to create the packages.
 
-Run the following command:
+* Clone the repo
+* `pnpm i`
+* `cd apps/web`
+* `pnpm db:push`
 
-```sh
-npx create-turbo@latest
-```
+error observed:
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
+``` bash
+Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: No "exports" main defined in /Users/joel/Code/joelhooks/drizzle-fail-turbo/apps/web/node_modules/adapter-drizzle/package.json
+    at __node_internal_captureLargerStackTrace (node:internal/errors:496:5)
+    at new NodeError (node:internal/errors:405:5)
+    at exportsNotFound (node:internal/modules/esm/resolve:261:10)
+    at packageExportsResolve (node:internal/modules/esm/resolve:535:13)
+    at resolveExports (node:internal/modules/cjs/loader:547:36)
+    at Module._findPath (node:internal/modules/cjs/loader:621:31)
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1034:27)
+    at Module._resolveFilename (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:11140:40)
+    at Module._load (node:internal/modules/cjs/loader:901:27)
+    at Module.require (node:internal/modules/cjs/loader:1115:19)
+    at require (node:internal/modules/helpers:130:18)
+    at Object.<anonymous> (/Users/joel/Code/joelhooks/drizzle-fail-turbo/apps/web/db/schema.ts:1:21)
+    at Module._compile (node:internal/modules/cjs/loader:1233:14)
+    at Module._compile (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:8644:30)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1287:10)
+    at Object.newLoader [as .ts] (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:8648:13)
+    at Module.load (node:internal/modules/cjs/loader:1091:32)
+    at Module._load (node:internal/modules/cjs/loader:938:12)
+    at Module.require (node:internal/modules/cjs/loader:1115:19)
+    at require (node:internal/modules/helpers:130:18)
+    at prepareFromSqliteImports (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:12840:20)
+    at async serializeSQLite (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:13317:33)
+    at async prepareSQLiteDbPushSnapshot (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:13366:26)
+    at async prepareSQLitePush (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:14878:31)
+    at async Command.<anonymous> (/Users/joel/Code/joelhooks/drizzle-fail-turbo/node_modules/.pnpm/drizzle-kit@0.20.14/node_modules/drizzle-kit/bin.cjs:63296:22) {
+  code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
 
 ```
-cd my-turborepo
-pnpm dev
-```
 
-### Remote Caching
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
